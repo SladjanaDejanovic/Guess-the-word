@@ -29,10 +29,19 @@
 
 const words = ["unbeliebubble", "dorime", "lovely", "slady", "yuri"];
 let random = words[Math.floor(Math.random() * words.length)];
-const guessButton = document.querySelector("guessBtn");
+const guessButton = document.querySelector(".guessBtn");
+const input = document.querySelector(".letter").value;
+let play = true;
+const showWord = document.querySelector(".word-in-progress");
 
+//- generate random word
+let secretWord = random.toUpperCase();
+console.log(secretWord);
+// - show _ instead of letters in a secret word
+showWord.innerHTML = random.replace(/./gi, "_");
+
+// - event on button guess
 guessButton.addEventListener("click", function () {
-  let secretWord = random;
-  console.log(secretWord);
-  const input = document.querySelector("letter").value;
+  if (secretWord.includes(input)) {
+  }
 });
