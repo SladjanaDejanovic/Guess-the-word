@@ -31,14 +31,19 @@ const words = ["unbeliebubble", "dorime", "lovely", "slady", "yuri"];
 // let play = true;
 const guessButton = document.querySelector(".guessBtn");
 const input = document.querySelector(".letter").value.toUpperCase();
+
 const showWord = document.querySelector(".word-in-progress");
 const numberOfGuesses = document.querySelector(".number");
-let number = 8;
+numberOfGuesses.innerHTML = 8;
+let number = numberOfGuesses;
+const incorrectLetters = [];
+const showWrong = document.querySelector(".guessed-letters");
 
 //- generate random word
-let random = words[Math.floor(Math.random() * words.length)].toUpperCase();
-let secretWord = random;
+let secretWord = words[Math.floor(Math.random() * words.length)].toUpperCase();
 console.log(secretWord);
+const stringArr = [...secretWord];
+console.log(stringArr);
 
 // - show _ instead of letters in a secret word
 showWord.innerHTML = secretWord.replace(/./gi, "_");
@@ -47,11 +52,12 @@ showWord.innerHTML = secretWord.replace(/./gi, "_");
 guessButton.addEventListener("click", function () {
   // - check if letter is there
   if (secretWord.includes(input)) {
-    // numberOfGuesses.innerHTML = "8";
-
     console.log("test");
+    // showWord.innerHTML = [...stringArr];
   } else {
     number--;
-    numberOfGuesses.innerHTML = number;
+    incorrectLetters.push(input);
+    console.log(incorrectLetters);
+    showWrong.innerHTML = [...incorrectLetters];
   }
 });
