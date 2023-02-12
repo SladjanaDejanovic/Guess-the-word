@@ -33,9 +33,10 @@ const guessButton = document.querySelector(".guessBtn");
 const input = document.querySelector(".letter").value.toUpperCase();
 
 const showWord = document.querySelector(".word-in-progress");
-const numberOfGuesses = document.querySelector(".number");
-numberOfGuesses.innerHTML = 8;
-let number = numberOfGuesses;
+let numberOfGuesses = document.querySelector(".number");
+let number = 8;
+numberOfGuesses.innerHTML = number;
+
 const incorrectLetters = [];
 const showWrong = document.querySelector(".guessed-letters");
 
@@ -48,16 +49,19 @@ console.log(stringArr);
 // - show _ instead of letters in a secret word
 showWord.innerHTML = secretWord.replace(/./gi, "_");
 
+// const checkLetter = function () {};
+
 // - event on button guess
 guessButton.addEventListener("click", function () {
   // - check if letter is there
-  if (secretWord.includes(input)) {
+  for (const letter of stringArr) console.log(letter);
+  if (input !== letter) {
     console.log("test");
-    // showWord.innerHTML = [...stringArr];
-  } else {
-    number--;
     incorrectLetters.push(input);
     console.log(incorrectLetters);
     showWrong.innerHTML = [...incorrectLetters];
   }
+  // else {
+  //   // number--;
+  // }
 });
