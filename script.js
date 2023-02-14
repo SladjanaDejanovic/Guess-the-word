@@ -41,41 +41,63 @@ numberOfGuesses.innerHTML = number;
 const incorrectLetters = [];
 const showWrong = document.querySelector(".guessed-letters");
 
-const correctGuesses = [];
+// const correctGuesses = [];
+let correctGuess = "";
 
 //- generate random word
 let secretWord = words[Math.floor(Math.random() * words.length)].toUpperCase();
 console.log(secretWord);
-const stringArr = [...secretWord];
-console.log(stringArr);
-
+// const stringArr = [...secretWord];
+// console.log(stringArr);
+let wordArray = secretWord.split("");
+let guessedWord = wordArray.map(() => "_");
+correctGuess = guessedWord.join("");
 // - show _ instead of letters in a secret word
 showWord.innerHTML = secretWord.replace(/./gi, "_");
 
 // const checkLetter = function () {};
 
+console.log(correctGuess);
+
 // - event on button guess
 guessButton.addEventListener("click", function () {
-  const letter = input.value.toUpperCase();
-  console.log(letter);
+  const guess = input.value.toUpperCase();
+  console.log(guess);
   // - check if letter is there
 
   //maps
-  let correctGuess = secretWord
-    .split("")
-    .map((char) => (char === letter ? char : "_"))
-    .join("");
+  // let correctGuess = secretWord
+  //   .split("")
+  //   .map((char) => (char === letter ? char : "_"))
+  //   .join("");
+  // console.log(correctGuess);
+  // showWord.innerHTML = correctGuess;
+  // input.value = "";
+
+  let wordArray = secretWord.split("");
+  guessedWord = wordArray.map((letter, index) => {
+    if (letter === guess) {
+      return guess;
+    } else {
+      return correctGuess[index];
+    }
+  });
+  correctGuess = guessedWord.join("");
   console.log(correctGuess);
-  showWord.innerHTML = correctGuess;
   input.value = "";
 
-  if (!secretWord.includes(letter)) {
-    incorrectLetters.push(letter);
+  if (!secretWord.includes(guess)) {
+    incorrectLetters.push(guess);
     showWrong.innerHTML = [...incorrectLetters];
     number--;
     numberOfGuesses.innerHTML = number;
     input.value = "";
   }
+
+  // if (correctGuesses.length === wordArray.length) {
+  //   console.log("done!");
+  // }
+
   // if (secretWord.includes(letter)) {
   //   correctGuesses.push(letter);
   //   console.log(correctGuesses);
@@ -95,6 +117,7 @@ guessButton.addEventListener("click", function () {
   //   input.value = "";
   //   if (number <= 0) console.log("game over");
   // }
+  showWord.innerHTML = correctGuess;
 });
 
 // replace all occurrances of correct letter in secret word
