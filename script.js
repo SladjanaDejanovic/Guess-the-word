@@ -35,7 +35,7 @@ const showWord = document.querySelector(".word-in-progress");
 const showWrong = document.querySelector(".guessed-letters");
 
 let numberOfGuesses = document.querySelector(".number");
-let number = 3;
+let number = 7;
 numberOfGuesses.innerHTML = number;
 
 // wrong guesses
@@ -99,6 +99,14 @@ guessButton.addEventListener("click", function () {
       showWord.innerHTML = correctGuess;
     }
   }
+
+  if (correctGuess === secretWord) {
+    console.log("congrats!");
+    input.disabled = true;
+    guessButton.classList.add("hide");
+    playAgain.classList.remove("hide");
+  }
+
   showWord.innerHTML = correctGuess;
 });
 
@@ -110,7 +118,7 @@ playAgain.addEventListener("click", function () {
   incorrectLetters = [];
   showWrong.innerHTML = [...incorrectLetters];
 
-  number = 3;
+  number = 7;
   numberOfGuesses.innerHTML = number;
 
   secretWord = words[Math.floor(Math.random() * words.length)].toUpperCase();

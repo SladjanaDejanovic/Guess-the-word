@@ -21,6 +21,7 @@ body {
 .logo {
   width: 70%;
   max-width: 484px;
+  margin-bottom: 10px;
 }
 
 h1 {
@@ -68,9 +69,15 @@ h1 {
   font-size: 30px;
 }
 
+.remaining {
+  margin-top: 10px;
+}
+
 .guessed-letters {
   padding: 0;
   list-style: none;
+  height: 20px;
+  margin-bottom: 10px;
 }
 
 .guessed-letters li {
