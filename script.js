@@ -19,33 +19,32 @@
 - populate ul guessed letteres with guesses from input if wrong ✅
 - delete input after pushing wrong guess in array✅
  - prevent duplicate wrong guesses shown ✅
- - dont lower number of guesses if letter already tried
+ - dont lower number of guesses if letter already tried ✅
  - show end game if no more guesses remained
- - show try again button
+ - show play again button ✅
+ - add event on play again
 
- - event on button play again (playing = false  ???)
 
 */
-// let play = true;
-// document.querySelector(".play-again").addEventListener("click", function () {});
 
 const words = ["unbeliebubble", "dorime", "lovely", "slady", "yuri"];
-
+const playAgain = document.querySelector(".play-again");
 const guessButton = document.querySelector(".guessBtn");
 const input = document.querySelector(".letter");
 const showWord = document.querySelector(".word-in-progress");
 const showWrong = document.querySelector(".guessed-letters");
 
 let numberOfGuesses = document.querySelector(".number");
-let number = 8;
+let number = 3;
 numberOfGuesses.innerHTML = number;
-
-let correctGuess = "";
 
 // wrong guesses
 let incorrectLetters = [];
 
+let correctGuess = "";
+
 //- generate random word
+
 let secretWord = words[Math.floor(Math.random() * words.length)].toUpperCase();
 console.log(secretWord);
 
@@ -54,17 +53,20 @@ let guessedWord = wordArray.map(() => "_");
 correctGuess = guessedWord.join("");
 
 // - show _ instead of letters in a secret word
-showWord.innerHTML = secretWord.replace(/./gi, "_");
 
-console.log(correctGuess);
+showWord.innerHTML = secretWord.replace(/./gi, "_");
 
 // - event on button guess
 guessButton.addEventListener("click", function () {
   const guess = input.value.toUpperCase();
-  console.log(guess);
+
+  if (incorrectLetters.includes(guess)) {
+    console.log("You already tried this letter!");
+    input.value = "";
+    return;
+  }
 
   // - check if letter is there
-  let wordArray = secretWord.split("");
   guessedWord = wordArray.map((letter, index) => {
     if (letter === guess) {
       return guess;
@@ -72,6 +74,7 @@ guessButton.addEventListener("click", function () {
       return correctGuess[index];
     }
   });
+
   correctGuess = guessedWord.join("");
   console.log(correctGuess);
   input.value = "";
@@ -83,14 +86,36 @@ guessButton.addEventListener("click", function () {
     number--;
     numberOfGuesses.innerHTML = number;
     input.value = "";
+
+    if (number === 0) {
+      console.log("you lost!");
+      guessButton.classList.add("hide");
+      playAgain.classList.remove("hide");
+      input.disabled = true;
+    } else {
+      correctGuess = guessedWord.join("");
+      console.log(correctGuess);
+      input.value = "";
+      showWord.innerHTML = correctGuess;
+    }
   }
-
-  // if (correctGuesses.length === wordArray.length) {
-  //   console.log("done!");
-  // }
-
-  //   if (number <= 0) console.log("game over");
-  // }
-
   showWord.innerHTML = correctGuess;
+});
+
+playAgain.addEventListener("click", function () {
+  guessButton.classList.remove("hide");
+  playAgain.classList.add("hide");
+  input.disabled = false;
+
+  incorrectLetters = [];
+  showWrong.innerHTML = [...incorrectLetters];
+
+  number = 3;
+  numberOfGuesses.innerHTML = number;
+
+  secretWord = words[Math.floor(Math.random() * words.length)].toUpperCase();
+  wordArray = secretWord.split("");
+  guessedWord = wordArray.map(() => "_");
+  correctGuess = guessedWord.join("");
+  showWord.innerHTML = secretWord.replace(/./gi, "_");
 });
