@@ -56,6 +56,24 @@ correctGuess = guessedWord.join("");
 
 showWord.innerHTML = secretWord.replace(/./gi, "_");
 
+const init = function () {
+  guessButton.classList.remove("hide");
+  playAgain.classList.add("hide");
+  input.disabled = false;
+
+  incorrectLetters = [];
+  showWrong.innerHTML = [...incorrectLetters];
+
+  number = 7;
+  numberOfGuesses.innerHTML = number;
+
+  secretWord = words[Math.floor(Math.random() * words.length)].toUpperCase();
+  wordArray = secretWord.split("");
+  guessedWord = wordArray.map(() => "_");
+  correctGuess = guessedWord.join("");
+  showWord.innerHTML = secretWord.replace(/./gi, "_");
+};
+
 // - event on button guess
 guessButton.addEventListener("click", function () {
   const guess = input.value.toUpperCase();
@@ -91,6 +109,7 @@ guessButton.addEventListener("click", function () {
       console.log("you lost!");
       guessButton.classList.add("hide");
       playAgain.classList.remove("hide");
+      showWord.innerHTML = secretWord;
       input.disabled = true;
     } else {
       correctGuess = guessedWord.join("");
@@ -110,20 +129,4 @@ guessButton.addEventListener("click", function () {
   showWord.innerHTML = correctGuess;
 });
 
-playAgain.addEventListener("click", function () {
-  guessButton.classList.remove("hide");
-  playAgain.classList.add("hide");
-  input.disabled = false;
-
-  incorrectLetters = [];
-  showWrong.innerHTML = [...incorrectLetters];
-
-  number = 7;
-  numberOfGuesses.innerHTML = number;
-
-  secretWord = words[Math.floor(Math.random() * words.length)].toUpperCase();
-  wordArray = secretWord.split("");
-  guessedWord = wordArray.map(() => "_");
-  correctGuess = guessedWord.join("");
-  showWord.innerHTML = secretWord.replace(/./gi, "_");
-});
+playAgain.addEventListener("click", init);
