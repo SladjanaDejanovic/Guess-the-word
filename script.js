@@ -84,7 +84,7 @@ guessButton.addEventListener("click", function () {
     return;
   }
 
-  // - check if letter is there
+  // - checking if letter is there
   guessedWord = wordArray.map((letter, index) => {
     if (letter === guess) {
       return guess;
